@@ -1,35 +1,48 @@
-# def get_gpa(param):
-#     """
-#     Calculates and returns the gpa (Grade Point Average) of the instance.
-#     Raises a valueError message if the instance has no grades.
-#
-#     Args:
-#         param: Student/Lecturer instance
-#
-#     Returns (int): Grade Point Average:
-#
-#     """
-#     gpa = 0
-#     if param.grades:
-#         for grade in param.grades:
-#             gpa += sum(param.grades.get(grade)) / len(param.grades.get(grade))
-#         gpa /= len(param.grades)
-#     else:
-#         raise ValueError(f"У {param.name} нет оценок")
-#     return round(gpa, 2)
+def get_gpa(param):
+    """
+    Calculates and returns the gpa (Grade Point Average) of the instance.
+    Raises a valueError message if the instance has no grades.
+
+    Args:
+        param: Student/Lecturer instance
+
+    Returns (int): Grade Point Average:
+
+    """
+    gpa = 0
+    if param.grades:
+        for grade in param.grades:
+            gpa += sum(param.grades.get(grade)) / len(param.grades.get(grade))
+        gpa /= len(param.grades)
+    else:
+        raise ValueError(f"У {param.name} нет оценок")
+    return round(gpa, 2)
 
 
-# def compare(param, other, class_):
-#     if not isinstance(other, class_):
-#         try:
-#             name = other.name
-#         except AttributeError:
-#             name = other
-#         print(f'{name} не является лектором/студентом')
-#         return
-#     else:
-#         print('isinstance passed')
-#         return param.__gpa() < other.__gpa()
+def compare(param, other, class_):
+    """
+    Compares two instances of class_ by they Grade Point Average and returns
+    True or False. Prints error message if the one to compare to is not an
+    instance of class_ .
+
+    Args:
+        param: Instance of class_
+        other: An instance of class_
+        class_: class. In our case: Student or Lecturer
+
+    Returns: True or False
+
+    """
+    if not isinstance(other, class_):
+        try:
+            name = other.name
+        except AttributeError:
+            name = other
+        print(f'{name} не является участником')
+        return
+    else:
+        return get_gpa(param) < get_gpa(other)
+
 
 class Student:
     def __init__(self, name, surname, gender):
@@ -41,24 +54,26 @@ class Student:
         self.grades = {}
 
     def __gpa(self):
-        """
-        Calculates and returns the gpa (Grade Point Average) of the student.
-        Raises a valueError message if the student has no grades.
+        # """
+        # Calculates and returns the gpa (Grade Point Average) of a student
+        # for all courses.
+        # Raises a valueError message if the student has no grades.
+        #
+        # Returns (int): Grade Point Average
+        #
+        # """
 
-        Returns (int): Grade Point Average
+        # Using function to avoid redundant code
+        return get_gpa(self)
 
-        """
-        gpa = 0
-        if self.grades:
-            for grade in self.grades:
-                gpa += sum(self.grades.get(grade)) / len(self.grades.get(grade))
-            gpa /= len(self.grades)
-        else:
-            raise ValueError(f"У {self.name} нет оценок")
-        return round(gpa, 2)
-
-        # # Using function to avoid redundant code
-        # return get_gpa(self)
+        # gpa = 0
+        # if self.grades:
+        #     for grade in self.grades:
+        #         gpa += sum(self.grades.get(grade)) / len(self.grades.get(grade))
+        #     gpa /= len(self.grades)
+        # else:
+        #     raise ValueError(f"У {self.name} нет оценок")
+        # return round(gpa, 2)
 
     def __str__(self):
         a = ", ".join(self.courses_in_progress) if self.courses_in_progress \
@@ -73,29 +88,30 @@ class Student:
                f'Завершенные курсы: {b}'
 
     def __lt__(self, other):
-        """
-        Compares two students by they Grade Point Average and returns True or
-        False. Prints error message if the one to compare to is not an instance
-        of the Student class.
+        # """
+        # Compares two students by they Grade Point Average and returns True or
+        # False. Prints error message if the one to compare to is not an instance
+        # of the Student class.
+        #
+        # Args:
+        #     other: An instance of the Student class
+        #
+        # Returns: True or False
+        #
+        # """
 
-        Args:
-            other: An instance of the Student class
+        # Using function to avoid redundant code
+        return compare(self, other, Student)
 
-        Returns: True or False
-
-        """
-        if not isinstance(other, Student):
-            try:
-                name = other.name
-            except AttributeError:
-                name = other
-            print(f'Ошибка! {name} не является студентом')
-            return
-        else:
-            return self.__gpa() < other.__gpa()
-
-        # # Using function to avoid redundant code
-        # return compare(self, other, Student)
+        # if not isinstance(other, Student):
+        #     try:
+        #         name = other.name
+        #     except AttributeError:
+        #         name = other
+        #     print(f'Ошибка! {name} не является студентом')
+        #     return
+        # else:
+        #     return self.__gpa() < other.__gpa()
 
     def rate_lecturer(self, lecturer, course, grade):
         """
@@ -133,52 +149,54 @@ class Lecturer(Mentor):
         self.grades = {}
 
     def __gpa(self):
-        """
-        Calculates and returns the gpa (Grade Point Average) of the lecturer.
-        Raises a valueError message if the lecturer has no grades.
+        # """
+        # Calculates and returns the gpa (Grade Point Average) of a lecturer
+        # for all courses.
+        # Raises a valueError message if the lecturer has no grades.
+        #
+        # Returns (int): Grade Point Average
+        # """
 
-        Returns (int): Grade Point Average
-        """
-        gpa = 0
-        if self.grades:
-            for grade in self.grades:
-                gpa += sum(self.grades.get(grade)) / len(self.grades.get(grade))
-            gpa /= len(self.grades)
-        else:
-            raise ValueError(f"У {self.name} нет оценок")
-        return round(gpa, 2)
+        # Using function to avoid redundant code
+        return get_gpa(self)
 
-        # # function to avoid redundant code
-        # return get_gpa(self)
+        # gpa = 0
+        # if self.grades:
+        #     for grade in self.grades:
+        #         gpa += sum(self.grades.get(grade)) / len(self.grades.get(grade))
+        #     gpa /= len(self.grades)
+        # else:
+        #     raise ValueError(f"У {self.name} нет оценок")
+        # return round(gpa, 2)
 
     def __str__(self):
         return f'Имя: {self.name}\nФамиля: {self.surname}\n' \
                f'Средняя оценка за лекции: : {self.__gpa()}'
 
     def __lt__(self, other):
-        """
-        Compares two lecturers by they Grade Point Average and returns True or
-        False. Prints error message if the one to compare to is not an instance
-        of the Lecturer class.
+        # """
+        # Compares two lecturers by they Grade Point Average and returns True or
+        # False. Prints error message if the one to compare to is not an instance
+        # of the Lecturer class.
+        #
+        # Args:
+        #     other: An instance of the Lecturer class
+        #
+        # Returns (bool): True or False
+        #
+        # """
+        # Using function to avoid redundant code
+        return compare(self, other, Lecturer)
 
-        Args:
-            other: An instance of the Lecturer class
-
-        Returns (bool): True or False
-
-        """
-        if not isinstance(other, Lecturer):
-            try:
-                name = other.name
-            except AttributeError:
-                name = other
-            print(f'{name} не является лектором')
-            return
-        else:
-            return self.__gpa() < other.__gpa()
-
-        # # Using function to avoid redundant code
-        # return compare(self, other, Lecturer)
+        # if not isinstance(other, Lecturer):
+        #     try:
+        #         name = other.name
+        #     except AttributeError:
+        #         name = other
+        #     print(f'{name} не является лектором')
+        #     return
+        # else:
+        #     return self.__gpa() < other.__gpa()
 
 
 class Reviewer(Mentor):
@@ -210,64 +228,44 @@ class Reviewer(Mentor):
             return 'Ошибка'
 
 
+def average_point(members, course):
+    """
+    Calculates and returns average point for all students / lecturers on the
+    course. Prints the name of students / lecturers not taking part to the
+    course or students..
+    Args:
+        members (list): List of students / lecturers instances of
+        Student / Lecturer class
+        course (str): Course taken/taught by students/lecturers
+
+    Returns (int): Average point for all students/lecturers on the course
+
+    """
+    total_grades = 0
+    real_member = 0
+    for member in members:
+        if isinstance(member, Student) and course in member.courses_in_progress \
+                or isinstance(member,
+                              Lecturer) and course in member.courses_attached:
+            total_grades += sum(member.grades.get(course)) / len(
+                member.grades.get(course))
+            real_member += 1
+        else:
+            try:
+                name = member.name
+                print(f'{name} не участник курса {course}')
+            except AttributeError:
+                name = member
+                print(f'{name} не является участником данной программы')
+    return total_grades / real_member
+
+
 def hws_average_point(students, course):
-    """
-    Calculates and returns the homeworks average point for all students
-    on the course. Prints the name of students not taking the course or students
-    not affiliate to the organisation.
-    Args:
-        students (list): List of students
-        course (str): Course taken by students
-
-    Returns (int): Homeworks average point for all students on the course
-
-    """
-    total_grades = 0
-    real_student = 0
-    for student in students:
-        if isinstance(student,
-                      Student) and course in student.courses_in_progress:
-            total_grades += sum(student.grades.get(course)) / len(
-                student.grades.get(course))
-            real_student += 1
-        else:
-            try:
-                name = student.name
-                print(f'{name} не проходит курс {course}')
-            except AttributeError:
-                name = student
-                print(f'{name} не является студентом')
-    return total_grades / real_student
+    return average_point(students, course)
 
 
-def lectors_average_point(lecturers, course):
-    """
-    Calculates and returns the lecturers average point for all lecturers
-    on the course. Prints the name of lecturers not teaching the course or
-    lecturers not affiliate to the organisation.
-    Args:
-        lecturers (list): List of lecturers
-        course (str): Course taught by lecturers
-
-    Returns (int): All lecturers average point for the course
-
-    """
-    total_grades = 0
-    real_lecturer = 0
-    for lecturer in lecturers:
-        if isinstance(lecturer,
-                      Lecturer) and course in lecturer.courses_attached:
-            total_grades += sum(lecturer.grades.get(course)) / len(
-                lecturer.grades.get(course))
-            real_lecturer += 1
-        else:
-            try:
-                name = lecturer.name
-                print(f'{name} не читает курс {course}')
-            except AttributeError:
-                name = lecturer
-                print(f'{name} не является лектором')
-    return total_grades / real_lecturer
+def lecturers_average_point(lecturers, course):
+    return average_point(lecturers, course)
 
 
 if __name__ == '__main__':
@@ -319,14 +317,23 @@ if __name__ == '__main__':
     print()
     print(st_marc)
     print()
+    print('Emily > Marc')
     print(st_emily > st_marc)
     print()
+
     print(lc_andrey)
     print()
     print(lc_leila)
     print()
-    print(lc_leila > lc_andrey)
+    print('Leila < Andrey')
+    print(lc_leila < lc_andrey)
     print()
+
+    print(rv_bob)
+    print()
+    print(rv_eva)
+    print()
+
     print('Оценки Emily: ', st_emily.grades)
     print('Оценки Marc: ', st_marc.grades)
     print()
@@ -335,10 +342,11 @@ if __name__ == '__main__':
     print('Средняя оценка за дз по курсу Git: ',
           hws_average_point([st_marc, st_emily], 'Git'))
     print()
+
     print('Оценки Andrey: ', lc_andrey.grades)
     print('Оценки Leila: ', lc_leila.grades)
     print()
     print('Средняя оценка за лекции всех лекторов в рамках курса Python: ',
-          lectors_average_point([lc_leila, lc_andrey], 'Python'))
+          lecturers_average_point([lc_leila, lc_andrey], 'Python'))
     print('Средняя оценка за лекции всех лекторов в рамках курса Git: ',
-          lectors_average_point([lc_leila, lc_andrey], 'Git'))
+          lecturers_average_point([lc_leila, lc_andrey], 'Git'))
